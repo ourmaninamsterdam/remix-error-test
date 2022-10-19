@@ -1,53 +1,30 @@
-# Welcome to Remix!
+# Example of compilation errors not being shown in the browser
 
-- [Remix Docs](https://remix.run/docs)
+## Steps
 
-## Development
+1. `yarn run dev`
+2. Go to http://localhost:3000
+3. In `routes/index.tsx`, cause a compilation error (i.e. add an unknown HTML tag or something similar).
 
-From your terminal:
+## Expected result (based on Next.js/CRA)
 
-```sh
-npm run dev
-```
+The browser should reload showing the compilation error instead of your page and you cannot continue until it's rectified.
 
-This starts your app in development mode, rebuilding assets on file changes.
+## Actual result
 
-## Deployment
-
-First, build your app for production:
+The browser reloads with the last-known good build of your page. The expected compilation error is only shown in the terminal:
 
 ```sh
-npm run build
+✘ [ERROR] [plugin browser-route-module] Build failed with 1 error:
+app/routes/index.tsx:4:30: ERROR: Expected closing tag "h1" to match opening tag "h200"
+
+
+Build failed with 1 error:
+error: Build failed with 1 error:
+app/routes/index.tsx:4:30: ERROR: Expected closing tag "h1" to match opening tag "h200"
+💿 Rebuilt in 62ms
+GET / 200 - - 37.632 ms
+GET / 200 - - 12.597 ms
 ```
 
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```
+NOTE: Runtime errors *do* get shown in the browser.
